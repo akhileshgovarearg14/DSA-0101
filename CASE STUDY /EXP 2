@@ -1,0 +1,170 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person
+{
+protected:
+    string name, address, phone_no;
+
+public:
+    void getPersonDetails()
+    {
+        cout << "Enter Name: ";
+        cin >> name;
+
+        cout << "Enter Address: ";
+        cin >> address;
+
+        cout << "Enter Phone No: ";
+        cin >> phone_no;
+    }
+
+    void displayPersonDetails()
+    {
+        cout << "Name       : " << name << endl;
+        cout << "Address    : " << address << endl;
+        cout << "Phone No   : " << phone_no << endl;
+    }
+};
+
+class Employee : public Person
+{
+private:
+    int eno;
+    string ename;
+
+public:
+    void getEmployee()
+    {
+        cout << "\nEnter Employee Number: ";
+        cin >> eno;
+
+        cout << "Enter Employee Name: ";
+        cin >> ename;
+
+        getPersonDetails();
+    }
+
+    void displayEmployee()
+    {
+        cout << "\n--- Employee Details ---\n";
+        cout << "Employee No : " << eno << endl;
+        cout << "Employee Name: " << ename << endl;
+        displayPersonDetails();
+    }
+};
+
+class Manager : public Person
+{
+private:
+    string designation, department_name;
+    float basic_salary;
+
+public:
+    void getManager()
+    {
+        cout << "\nEnter Designation: ";
+        cin >> designation;
+
+        cout << "Enter Department: ";
+        cin >> department_name;
+
+        cout << "Enter Basic Salary: ";
+        cin >> basic_salary;
+
+        getPersonDetails();
+    }
+
+    void displayManager()
+    {
+        cout << "\n--- Manager Details ---\n";
+        cout << "Designation : " << designation << endl;
+        cout << "Department  : " << department_name << endl;
+        cout << "Basic Salary: " << basic_salary << endl;
+        displayPersonDetails();
+    }
+
+    float getSalary()
+    {
+        return basic_salary;
+    }
+
+    void displayHighest()
+    {
+        displayManager();
+    }
+};
+
+int main()
+{
+    Employee e[10];
+    Manager m[10];
+
+    int ne, nm, choice;
+
+    cout << "Enter number of Employees: ";
+    cin >> ne;
+
+    cout << "Enter number of Managers: ";
+    cin >> nm;
+
+    while (true)
+    {
+        cout << "\n===== MENU =====\n";
+        cout << "1. Accept Employee and Manager Details\n";
+        cout << "2. Display All Details\n";
+        cout << "3. Display Manager with Highest Salary\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            for (int i = 0; i < ne; i++)
+            {
+                cout << "\nEnter Employee " << i + 1 << " Details";
+                e[i].getEmployee();
+            }
+
+            for (int i = 0; i < nm; i++)
+            {
+                cout << "\nEnter Manager " << i + 1 << " Details";
+                m[i].getManager();
+            }
+            break;
+
+        case 2:
+            for (int i = 0; i < ne; i++)
+                e[i].displayEmployee();
+
+            for (int i = 0; i < nm; i++)
+                m[i].displayManager();
+
+            break;
+
+        case 3:
+        {
+            int pos = 0;
+
+            for (int i = 1; i < nm; i++)
+            {
+                if (m[i].getSalary() > m[pos].getSalary())
+                    pos = i;
+            }
+
+            cout << "\nManager with Highest Basic Salary:\n";
+            m[pos].displayHighest();
+            break;
+        }
+
+        case 4:
+            cout << "\nProgram Exited.";
+            return 0;
+
+        default:
+            cout << "\nInvalid Choice!";
+        }
+    }
+}
