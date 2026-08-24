@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+// Base class
+class Student
+{
+protected:
+    int mark1, mark2, mark3;
+
+public:
+    void getMarks()
+    {
+        cout << "Enter marks of 3 subjects: ";
+        cin >> mark1 >> mark2 >> mark3;
+    }
+};
+
+// Derived class
+class Total : public Student
+{
+protected:
+    int total;
+
+public:
+    void findTotal()
+    {
+        total = mark1 + mark2 + mark3;
+    }
+};
+
+// Derived class from Total
+class Percentage : public Total
+{
+public:
+    void display()
+    {
+        float percentage;
+
+        percentage = total / 3.0;
+
+        cout << "\nTotal Marks = " << total << endl;
+        cout << "Percentage = " << percentage << "%" << endl;
+    }
+};
+
+int main()
+{
+    Percentage p;
+
+    p.getMarks();
+    p.findTotal();
+    p.display();
+
+    return 0;
+}
