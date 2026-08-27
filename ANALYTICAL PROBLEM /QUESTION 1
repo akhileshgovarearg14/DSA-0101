@@ -1,0 +1,110 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BankAccount
+{
+    string name;
+    int accountNo;
+    string type;
+    double balance;
+
+public:
+    // Constructor
+    BankAccount()
+    {
+        name = "";
+        accountNo = 0;
+        type = "";
+        balance = 0;
+    }
+
+    // Assign initial values
+    void initialize()
+    {
+        cout << "Enter depositor name: ";
+        getline(cin, name);
+
+        cout << "Enter account number: ";
+        cin >> accountNo;
+
+        cout << "Enter account type: ";
+        cin >> type;
+
+        cout << "Enter initial balance: ";
+        cin >> balance;
+    }
+
+    // Deposit amount
+    void deposit()
+    {
+        int acc;
+        string n;
+        double amount;
+
+        cout << "\nEnter account number: ";
+        cin >> acc;
+
+        cout << "Enter name: ";
+        cin >> n;
+
+        if (acc == accountNo && n == name)
+        {
+            cout << "Enter deposit amount: ";
+            cin >> amount;
+            balance += amount;
+            cout << "Amount deposited successfully." << endl;
+        }
+        else
+        {
+            cout << "Invalid account number or name." << endl;
+        }
+    }
+
+    // Withdraw amount
+    void withdraw()
+    {
+        double amount;
+
+        cout << "\nEnter withdrawal amount: ";
+        cin >> amount;
+
+        if (amount <= balance)
+        {
+            balance -= amount;
+            cout << "Amount withdrawn successfully." << endl;
+        }
+        else
+        {
+            cout << "Insufficient balance." << endl;
+        }
+    }
+
+    // Display details
+    void display()
+    {
+        cout << "\n--- Account Details ---" << endl;
+        cout << "Name: " << name << endl;
+        cout << "Account Number: " << accountNo << endl;
+        cout << "Account Type: " << type << endl;
+        cout << "Balance: Rs. " << balance << endl;
+    }
+
+    // Destructor
+    ~BankAccount()
+    {
+        cout << "\nBank account object destroyed." << endl;
+    }
+};
+
+int main()
+{
+    BankAccount acc;
+
+    acc.initialize();
+    acc.deposit();
+    acc.withdraw();
+    acc.display();
+
+    return 0;
+}
