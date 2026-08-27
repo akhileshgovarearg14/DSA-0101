@@ -1,0 +1,106 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class books
+{
+    string author, title, publisher;
+    double price;
+    int stock;
+
+    static int successful;
+    static int unsuccessful;
+
+    // Private function to update price
+    void updatePrice(double newPrice)
+    {
+        price = newPrice;
+    }
+
+public:
+    // Constructor
+    books(string a, string t, string p, double pr, int s)
+    {
+        author = a;
+        title = t;
+        publisher = p;
+        price = pr;
+        stock = s;
+    }
+
+    void searchBook(string a, string t)
+    {
+        if (author == a && title == t)
+        {
+            cout << "\nBook Available!" << endl;
+            cout << "Title: " << title << endl;
+            cout << "Author: " << author << endl;
+            cout << "Publisher: " << publisher << endl;
+            cout << "Price: Rs. " << price << endl;
+            cout << "Stock: " << stock << endl;
+
+            int copies;
+            cout << "Enter number of copies required: ";
+            cin >> copies;
+
+            if (copies <= stock)
+            {
+                double total = copies * price;
+                cout << "Total Cost: Rs. " << total << endl;
+
+                stock = stock - copies;
+                successful++;
+            }
+            else
+            {
+                cout << "Required copies not in stock." << endl;
+                unsuccessful++;
+            }
+        }
+        else
+        {
+            cout << "Book not available." << endl;
+            unsuccessful++;
+        }
+    }
+
+    void changePrice(double newPrice)
+    {
+        updatePrice(newPrice);
+        cout << "Price updated successfully." << endl;
+    }
+
+    static void statistics()
+    {
+        cout << "\n--- Transaction Statistics ---" << endl;
+        cout << "Successful Transactions: " << successful << endl;
+        cout << "Unsuccessful Transactions: " << unsuccessful << endl;
+    }
+};
+
+int books::successful = 0;
+int books::unsuccessful = 0;
+
+int main()
+{
+    books b1("Chetan Bhagat", "3 Idiots", "Rupa", 400, 10);
+    books b2("R.K. Narayan", "Malgudi Days", "Indian Press", 300, 5);
+    books b3("J.K. Rowling", "Harry Potter", "Bloomsbury", 600, 8);
+
+    string author, title;
+
+    cout << "Enter book title: ";
+    getline(cin, title);
+
+    cout << "Enter author name: ";
+    getline(cin, author);
+
+    b1.searchBook(author, title);
+    b2.searchBook(author, title);
+    b3.searchBook(author, title);
+
+    // Display statistics
+    books::statistics();
+
+    return 0;
+}
